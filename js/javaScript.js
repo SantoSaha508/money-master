@@ -12,9 +12,23 @@ function expensBalance(expensBalanceId){
     return peekField;
 }
 
+// error handeling
+function handleError(successId, fainId){
+    // error section
+    const notifySuccess = document.getElementById(successId);
+    const notifyFail = document.getElementById(fainId);
+    if(expenses > incomeValue){
+        notifySuccess.style.display = 'none';
+        notifyFail.style.display = 'block';
+    }
+    else{
+        notifySuccess.style.display = 'block';
+        notifyFail.style.display = 'none';
+    }
+}
+
 // for calculate button
 document.getElementById('calculateSubmit').addEventListener('click', function(){
-
     // income value
     const incomeValue = expensesSave('incomeInput');
     // peek foood cost
@@ -25,7 +39,8 @@ document.getElementById('calculateSubmit').addEventListener('click', function(){
     const clothValue = expensesSave('clothInput');
 
     // peek total expenses///////////////
-    const totalExpenField = expensBalance('totalExpn');
+    if(foodValue > 0 && rentValue > 0 && clothValue > 0){
+        const totalExpenField = expensBalance('totalExpn');
     const expenses = foodValue + rentValue +clothValue;
     totalExpenField.innerText = expenses;
 
@@ -33,7 +48,19 @@ document.getElementById('calculateSubmit').addEventListener('click', function(){
     const balanceInputField = expensBalance('balance');
     const totalBalance = incomeValue - expenses
     balanceInputField.innerText = totalBalance;
-    
+
+    // error section
+    const notifySuccess = document.getElementById('warning-success');
+    const notifyFail = document.getElementById('warning-fail');
+    if(expenses > incomeValue){
+        notifySuccess.style.display = 'none';
+        notifyFail.style.display = 'block';
+    }
+    else{
+        notifySuccess.style.display = 'block';
+        notifyFail.style.display = 'none';
+    }
+    }
 })
 
 document.getElementById('save').addEventListener('click', function(){
@@ -41,19 +68,31 @@ document.getElementById('save').addEventListener('click', function(){
     const incomeValue = expensesSave('incomeInput');
     // peek save input field
     const savePercent = expensesSave('savePercent');
-    
     // peek saving amount field
     const saveAmount = expensBalance('savaAmount');
-    
     // calculate saving amount
     const calculate = incomeValue * (savePercent /100);
-    saveAmount.innerText = calculate;
+    //saveAmount.innerText = calculate;
     // calculate remaning balance
     const balanceText = expensBalance('balance');
     const balance = balanceText.innerText;
-    console.log(balance);
     const remBalance = expensBalance('remaningBalance')
     const remaningBalance = parseFloat(balance - calculate);
-    remBalance.innerText = remaningBalance;
+    //remBalance.innerText = remaningBalance;
+
+    // warning section
+    const notifySuccess = document.getElementById('savewarning-success');
+    const notifyFail = document.getElementById('savewarning-fail');
+    if(calculate > remaningBalance){
+        notifySuccess.style.display = 'none';
+        notifyFail.style.display = 'block';
+    }
+    else{
+        notifySuccess.style.display = 'block';
+        notifyFail.style.display = 'none';
+        saveAmount.innerText = calculate;
+        remBalance.innerText = remaningBalance;
+
+    }
 
 })
