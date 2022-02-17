@@ -12,21 +12,6 @@ function expensBalance(expensBalanceId){
     return peekField;
 }
 
-// error handeling
-function handleError(successId, fainId){
-    // error section
-    const notifySuccess = document.getElementById(successId);
-    const notifyFail = document.getElementById(fainId);
-    if(expenses > incomeValue){
-        notifySuccess.style.display = 'none';
-        notifyFail.style.display = 'block';
-    }
-    else{
-        notifySuccess.style.display = 'block';
-        notifyFail.style.display = 'none';
-    }
-}
-
 // for calculate button
 document.getElementById('calculateSubmit').addEventListener('click', function(){
     // income value
@@ -42,12 +27,12 @@ document.getElementById('calculateSubmit').addEventListener('click', function(){
     if(foodValue > 0 && rentValue > 0 && clothValue > 0){
         const totalExpenField = expensBalance('totalExpn');
     const expenses = foodValue + rentValue +clothValue;
-    totalExpenField.innerText = expenses;
+    //totalExpenField.innerText = expenses;
 
     // peek balance ////////////////
     const balanceInputField = expensBalance('balance');
     const totalBalance = incomeValue - expenses
-    balanceInputField.innerText = totalBalance;
+    //balanceInputField.innerText = totalBalance;
 
     // error section
     const notifySuccess = document.getElementById('warning-success');
@@ -59,6 +44,8 @@ document.getElementById('calculateSubmit').addEventListener('click', function(){
     else{
         notifySuccess.style.display = 'block';
         notifyFail.style.display = 'none';
+        totalExpenField.innerText = expenses;
+        balanceInputField.innerText = totalBalance;
     }
     }
 })
